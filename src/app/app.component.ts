@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { CustomerComponent } from './components/customer/customer.component';
+import { PinComponent } from './components/pin/pin.component';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +10,16 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'customer-list';
+  bsModalRef: BsModalRef | undefined;
+
+  constructor(private modalService: BsModalService) { }
+
+  openAddCustomerModal() {
+    this.bsModalRef = this.modalService.show(CustomerComponent);
+  }
+
+  openAddPinModal() {
+    this.bsModalRef = this.modalService.show(PinComponent);
+
+  }
 }

@@ -1,1 +1,15 @@
-<p>customer works!</p>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <label for="title">Title:</label>
+    <input type="text" id="title" formControlName="title" />
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" formControlName="email" />
+
+    <label for="region">Region:</label>
+    <input type="text" id="region" formControlName="region" />
+
+    <label for="country">Country:</label>
+    <input type="text" id="country" formControlName="country" />
+
+    <button type="submit">Submit</button>
+</form>
