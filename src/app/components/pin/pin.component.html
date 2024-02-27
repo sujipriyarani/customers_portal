@@ -1,62 +1,86 @@
 <div class="modal-content">
     <div class="modal-header">
         <h5 class="modal-title">Create Customer</h5>
-    </div>
-    <div class="modal-body">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <div class="row mb-3">
-                <label for="inputTitle" class="col-sm-4 col-form-label text-sm-end">Title*: </label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" id="inputTitle" formControlName="title">
-                    <div class="text-danger" *ngIf="submitted && form.get('title')?.errors?.['required']">
-                        <small>Title is required</small>
+        <div class="modal-body">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="row mb-3">
+                    <label for="inputTitle" class="col-sm-4 col-form-label text-sm-end">Title*: </label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="inputTitle" formControlName="title">
+                        <div class="text-danger" *ngIf="submitted && form.get('title')?.errors?.['required']">
+                            <small>Title is required</small>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row mb-3">
-                <label for="inputImage" class="col-sm-4 col-form-label text-sm-end">Select Image*: </label>
-                <div class="col-sm-7">
-                    <input type="email" class="form-control" id="inputImage" formControlName="image">
-                    <div class="text-danger" *ngIf="submitted && form.get('image')?.errors">
-                        <small *ngIf="form.get('image')?.errors?.['required']">
-                            Image is required
-                        </small>
-                    </div>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label for="collaboratory" class="col-sm-4 col-form-label text-sm-end">Select Collaboratory*: </label>
-                <div class="col-sm-7">
-                    <ngx-select [items]="CollaboratoryList" formControlName="collaboratory"></ngx-select>
-                    <div class="text-danger" *ngIf="submitted && form.get('collaboratory')?.errors?.['required']">
-                        <small>Collaboratory is required</small>
-                    </div>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label for="privacy" class="col-sm-4 col-form-label text-sm-end">Privacy*: </label>
-                <div class="col-sm-7">
-                    <div *ngFor="let option of radioOptions" class="form-check">
-                        <input class="form-check-input" type="radio" name="privacy"
-                            [id]="'flexRadioDefault' + option.id" [value]="option.id"
-                            [checked]="option.id === selectedOption" (change)="onRadioChange(option.id)">
-                        <label class="form-check-label" [for]="'flexRadioDefault' + option.id">
-                            {{ option.label }}
-                        </label>
-                    </div>
+                <div class="row mb-3">
+                    <label for="inputImage" class="col-sm-4 col-form-label text-sm-end">Select Image*: </label>
+                    <div class="col-sm-7">
 
-                    <div class="text-danger" *ngIf="submitted && form.get('privacy')?.errors?.['required']">
-                        <small>
-                            Privacy is required
-                        </small>
+                        <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+                            (fileOver)="fileOverBase($event)" [uploader]="uploader" class="well my-drop-zone">
+
+                            <ng-container>
+                                <label for="fileInput" class="file-label">
+                                    <span>Choose & Drag and Drop file here</span>
+                                    <input type="file" id="fileInput" (change)="onFileChange($event)"
+                                        formControlName="image" />
+                                </label>
+                            </ng-container>
+
+                            <div *ngFor="let item of uploader.queue">
+                                <div class="row">
+                                    <div class="col-xs-8">{{ item.file.name }}</div>
+
+                                    <div class="col-xs-4"> <button class="btn btn-success btn-xs pull-right"
+                                            (click)="uploadItem(item)">Upload</button>
+                                        <button class="btn btn-warning btn-xs pull-right"
+                                            (click)="removeItem(item)">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-danger" *ngIf="submitted && form.get('image')?.errors">
+                            <small *ngIf="form.get('image')?.errors?.['required']">
+                                Image is required
+                            </small>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-7 offset-sm-4">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="row mb-3">
+                    <label for="collaboratory" class="col-sm-4 col-form-label text-sm-end">Select Collaboratory*:
+                    </label>
+                    <div class="col-sm-7">
+                        <ngx-select [items]="CollaboratoryList" formControlName="collaboratory"></ngx-select>
+                        <div class="text-danger" *ngIf="submitted && form.get('collaboratory')?.errors?.['required']">
+                            <small>Collaboratory is required</small>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </form>
+                <div class="row mb-3">
+                    <label for="privacy" class="col-sm-4 col-form-label text-sm-end">Privacy*: </label>
+                    <div class="col-sm-7">
+                        <div *ngFor="let option of radioOptions" class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="privacy"
+                                [id]="'flexRadioDefault' + option.id" [value]="option.id" formControlName="privacy">
+
+                            <label class="form-check-label" [for]="'flexRadioDefault' + option.id">
+                                {{ option.label }}
+                            </label>
+                        </div>
+
+                        <div class="text-danger" *ngIf="submitted && form.get('privacy')?.errors?.['required']">
+                            <small>
+                                Privacy is required
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-7 offset-sm-4">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-</div>

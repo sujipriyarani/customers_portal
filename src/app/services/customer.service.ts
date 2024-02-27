@@ -11,10 +11,12 @@ export class CustomerService {
 
   constructor(private http: HttpClient) {}
 
+  // Get region list
   getRegions(): Observable<any> {
     return this.http.get(`${this.baseUrl}`);
   }
 
+  // Get Country List
   // getCountries(region: string): Observable<any> {
   //   return this.http.get(`${this.baseUrl}?region=${region}`);
   // }

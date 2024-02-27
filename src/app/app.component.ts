@@ -14,10 +14,12 @@ export class AppComponent {
 
   constructor(private modalService: BsModalService) { }
 
+  // Open customer modal
   openAddCustomerModal() {
     this.bsModalRef = this.modalService.show(CustomerComponent);
   }
 
+  // Open pin modal
   openAddPinModal() {
     const modalConfig = {
       class: 'modal-lg'

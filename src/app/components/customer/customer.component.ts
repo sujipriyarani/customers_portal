@@ -23,6 +23,7 @@ export class CustomerComponent {
     this.getRegionList();
   }
 
+  // Form initialization
   private initForm(): void {
     this.form = this.fb.group({
       title: ['', Validators.required],
@@ -40,6 +41,7 @@ export class CustomerComponent {
     });
   }
 
+  // Form submission
   onSubmit(): void {
     console.log('data')
     this.submitted = true;
@@ -49,6 +51,7 @@ export class CustomerComponent {
     }
   }
 
+  // Get region list
   getRegionList() {
     this.customerService.getRegions().subscribe((res) => {
       this.regionList = Object.values(res.data).map((country:any) => country.region);
