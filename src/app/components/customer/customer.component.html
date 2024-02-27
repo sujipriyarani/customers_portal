@@ -9,7 +9,7 @@
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="inputTitle"
                         formControlName="title">
-                    <div class="text-danger" *ngIf="submitted && form.get('title')?.errors?.required">
+                    <div class="text-danger" *ngIf="submitted && form.get('title')?.errors?.['required']">
                         <small>Title is required</small>
                     </div>
                 </div>
@@ -21,12 +21,12 @@
                         formControlName="email">
                         <div
                       class="text-danger"
-                      *ngIf="submitted && form.get('email').errors"
+                      *ngIf="submitted && form.get('email')?.errors"
                     >
-                      <small *ngIf="form.get('email').errors.required">
+                      <small *ngIf="form.get('email')?.errors?.['required']">
                         Email address is required
                       </small>
-                      <small *ngIf="form.get('email').errors.pattern">
+                      <small *ngIf="form.get('email')?.errors?.['pattern']">
                         Enter valid email address
                       </small>
                     </div>
@@ -36,7 +36,7 @@
                 <label for="Region" class="col-sm-2 col-form-label text-sm-end">Region*: </label>
                 <div class="col-sm-10">
                     <ngx-select [items]="regionList" formControlName="region"></ngx-select>
-                    <div class="text-danger" *ngIf="submitted && form.get('region')?.errors?.required">
+                    <div class="text-danger" *ngIf="submitted && form.get('region')?.errors?.['required']">
                         <small>Region is required</small>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                 <label for="country" class="col-sm-2 col-form-label text-sm-end">Country*: </label>
                 <div class="col-sm-10">
                     <ngx-select [items]="countryList" formControlName="country"></ngx-select>
-                    <div class="text-danger" *ngIf="submitted && form.get('country')?.errors?.required">
+                    <div class="text-danger" *ngIf="submitted && form.get('country')?.errors?.['required']">
                         <small>Country is required</small>
                     </div>
                 </div>

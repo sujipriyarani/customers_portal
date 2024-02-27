@@ -19,7 +19,10 @@ export class AppComponent {
   }
 
   openAddPinModal() {
-    this.bsModalRef = this.modalService.show(PinComponent);
+    const modalConfig = {
+      class: 'modal-lg'
+    };
+    this.bsModalRef = this.modalService.show(PinComponent, modalConfig);
 
   }
 }
